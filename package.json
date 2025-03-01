@@ -1,0 +1,26 @@
+{
+  "name": "ts-pg",
+  "version": "1.0.0",
+  "description": "自分の勉強用のts遊び場",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tkrd-stack/ts-pg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tkrd-stack/ts-pg/issues"
+  },
+  "homepage": "https://github.com/tkrd-stack/ts-pg#readme",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@types/node": "^22.13.5"
+  }
+}
