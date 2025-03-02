@@ -217,3 +217,73 @@ function foo([a, b]: [string, number]) {}
 function bar({ a, b }: { a: string; b: number }) {
   console.log(a, b);
 }
+
+// type guard function
+function isString2(value: any): value is string {
+  return typeof value === 'string';
+}
+
+function printLength(value: any) {
+  if (isString2(value)) {
+    console.log(value.length);
+  }
+}
+printLength('hello');
+
+// class
+class Person {
+  // public name: string;
+  public readonly name: string;
+  protected age: number;
+  private id: number;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+    this.id = 1;
+  }
+  introduce() {
+    console.log(`I'm ${this.name}. I'm ${this.age} years old.`);
+  }
+}
+const john = new Person('John', 20);
+console.log(john.introduce());
+john.name = 'bob';
+console.log(john.name);
+john.age = 30;
+john.id = 2;
+
+// constructor shorthand
+
+class Person2 {
+  // static
+  static x = 0;
+  constructor(public name: string, public age: number) {}
+  static increment() {
+    this.x++;
+  }
+}
+
+Person2.increment();
+console.log(Person2.x);
+
+// interface class
+
+class Animal {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  greet() {
+    console.log(`hello, I'm ${this.name}`);
+  }
+}
+
+class Bard extends Animal {
+  fly(): string {
+    return 'fly';
+  }
+}
+
+const bird = new Bard('bird');
+bird.greet();
+console.log(bird.fly());
