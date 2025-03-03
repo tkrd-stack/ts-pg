@@ -287,3 +287,88 @@ class Bard extends Animal {
 const bird = new Bard('bird');
 bird.greet();
 console.log(bird.fly());
+
+// instanceof
+console.log(bird instanceof Bard);
+console.log(bird instanceof Bard);
+
+// abstract class
+abstract class Animal2 {
+  abstract makeSound(): void;
+  move(): void {
+    console.log('roaming the earth...');
+  }
+}
+
+class Fog extends Animal2 {
+  makeSound(): void {
+    console.log('bow bow');
+  }
+}
+const fog = new Fog();
+fog.move();
+fog.makeSound();
+
+// getter setter
+class Circle {
+  private _radius: number;
+  constructor(radius: number) {
+    this._radius = radius;
+  }
+
+  get radius() {
+    return this._radius;
+  }
+
+  set radius(radius: number) {
+    if (radius <= 0) {
+      throw new Error('radius must be positive');
+    }
+    this._radius = radius;
+  }
+}
+
+const circle = new Circle(10);
+console.log(circle.radius);
+circle.radius = 100;
+console.log(circle.radius);
+circle.radius = -1;
+console.log(circle.radius);
+
+// interface
+interface Point {
+  readonly x: number;
+  readonly y: number;
+  sum(): number;
+}
+
+const point: Point = {
+  x: 10,
+  y: 20,
+  sum() {
+    return this.x + this.y;
+  },
+};
+
+class Point2 implements Point {
+  constructor(readonly x: number, readonly y: number) {}
+  sum() {
+    return this.x + this.y;
+  }
+}
+
+// Custom error
+class CustomError extends Error {
+  code = 'CustomError';
+  constructor(message?: string) {
+    super(message);
+  }
+}
+
+try {
+  throw new CustomError('this is custom error');
+} catch (error) {
+  if (error instanceof CustomError) {
+    console.log(error.code);
+  }
+}
