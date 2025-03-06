@@ -317,3 +317,158 @@ type Person = {
 };
 
 type RequiredPerson = Required<Person>;
+
+// type guard function
+function isString2(value: any): value is string {
+  return typeof value === 'string';
+}
+
+function printLength(value: any) {
+  if (isString2(value)) {
+    console.log(value.length);
+  }
+}
+printLength('hello');
+
+// class
+class Person {
+  // public name: string;
+  public readonly name: string;
+  protected age: number;
+  private id: number;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+    this.id = 1;
+  }
+  introduce() {
+    console.log(`I'm ${this.name}. I'm ${this.age} years old.`);
+  }
+}
+const john = new Person('John', 20);
+console.log(john.introduce());
+john.name = 'bob';
+console.log(john.name);
+john.age = 30;
+john.id = 2;
+
+// constructor shorthand
+
+class Person2 {
+  // static
+  static x = 0;
+  constructor(public name: string, public age: number) {}
+  static increment() {
+    this.x++;
+  }
+}
+
+Person2.increment();
+console.log(Person2.x);
+
+// interface class
+
+class Animal {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  greet() {
+    console.log(`hello, I'm ${this.name}`);
+  }
+}
+
+class Bard extends Animal {
+  fly(): string {
+    return 'fly';
+  }
+}
+
+const bird = new Bard('bird');
+bird.greet();
+console.log(bird.fly());
+
+// instanceof
+console.log(bird instanceof Bard);
+console.log(bird instanceof Bard);
+
+// abstract class
+abstract class Animal2 {
+  abstract makeSound(): void;
+  move(): void {
+    console.log('roaming the earth...');
+  }
+}
+
+class Fog extends Animal2 {
+  makeSound(): void {
+    console.log('bow bow');
+  }
+}
+const fog = new Fog();
+fog.move();
+fog.makeSound();
+
+// getter setter
+class Circle {
+  private _radius: number;
+  constructor(radius: number) {
+    this._radius = radius;
+  }
+
+  get radius() {
+    return this._radius;
+  }
+
+  set radius(radius: number) {
+    if (radius <= 0) {
+      throw new Error('radius must be positive');
+    }
+    this._radius = radius;
+  }
+}
+
+const circle = new Circle(10);
+console.log(circle.radius);
+circle.radius = 100;
+console.log(circle.radius);
+circle.radius = -1;
+console.log(circle.radius);
+
+// interface
+interface Point {
+  readonly x: number;
+  readonly y: number;
+  sum(): number;
+}
+
+const point: Point = {
+  x: 10,
+  y: 20,
+  sum() {
+    return this.x + this.y;
+  },
+};
+
+class Point2 implements Point {
+  constructor(readonly x: number, readonly y: number) {}
+  sum() {
+    return this.x + this.y;
+  }
+}
+
+// Custom error
+class CustomError extends Error {
+  code = 'CustomError';
+  constructor(message?: string) {
+    super(message);
+  }
+}
+
+try {
+  throw new CustomError('this is custom error');
+} catch (error) {
+  if (error instanceof CustomError) {
+    console.log(error.code);
+  }
+}
