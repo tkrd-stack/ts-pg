@@ -1,8 +1,10 @@
 # typescript
 
+[サバイバル TypeScript](https://typescriptbook.jp/)
+
 ## 実行環境
 
-ローカル環境でコンパイルする環境
+- ローカル環境でコンパイルする環境
 
 ```terminal
 npm i -g typescript
@@ -81,7 +83,7 @@ const message: string = 'hello';
 
 ### ショートハンドプロパティネーム
 
-プロパティの名前がすでに定義されている変数である場合は、そのプロパティ名を省略できる。
+- プロパティの名前がすでに定義されている変数である場合は、そのプロパティ名を省略できる。
 
 ## オプションプロパティ(?)
 
@@ -112,7 +114,7 @@ const message: string = 'hello';
 
 ### set の型注釈
 
-Set<型>で記述。
+- Set<型>で記述。
 
 ## 列挙型(Enum)
 
@@ -154,13 +156,13 @@ Set<型>で記述。
 
 ## 制御フロー分析
 
-処理の流れに応じて変数の型を絞り込むことができる。
+- 処理の流れに応じて変数の型を絞り込むことができる。
 
 ### ユニオン型の曖昧さ
 
-ユニオン型で型注釈を設定すると、持たないメソッドやプロパティへのアクセスをするとエラーが発生する。
+- ユニオン型で型注釈を設定すると、持たないメソッドやプロパティへのアクセスをするとエラーが発生する。
 
-```typescript
+```typescript:union type ambiguity
 function showMonth(month: string | number) {
   console.log(month.padStart(2, '0')); //waringが発生
 }
@@ -168,7 +170,7 @@ function showMonth(month: string | number) {
 
 ### 制御フロー分析
 
-条件分岐などの制御フローを分析することで、コードが実行されるタイミングで型の可能性を判断している。
+- 条件分岐などの制御フローを分析することで、コードが実行されるタイミングで型の可能性を判断している。
 
 ```typescript
 function showMonth(month: string | number) {
@@ -182,7 +184,7 @@ function showMonth(month: string | number) {
 
 ### typeof
 
-型の曖昧さを回避するために比較演算子で条件判定をして、型を絞り込んだ。このような型のチェックを型ガードという。
+- 型の曖昧さを回避するために比較演算子で条件判定をして、型を絞り込んだ。このような型のチェックを型ガードという。
 
 ```typescript
 function showMonth(month: string | number) {
@@ -201,12 +203,16 @@ function showMonth(month: string | number) {
 
 - in 演算子でオブジェクトが特定のプロパティを持つかを判定することもできる。
 - in 演算子はオブジェクトのプロパティをチェックするために使う。
-- 文字列やプリミティブな型に対しては、=== を使用して比較を行います。
+- 文字列やプリミティブな型に対しては、=== を使用して比較を行う。
+
+### 型ガード関数(type guard function)
+
+//TODO
 
 ## 分割代入引数
 
-関数の引数に分割代入を使うことができる。アロー関数でも使える。
-引数が配列やオブジェクトの場合、そのオブジェクトの一部を関数で利用したい場合に便利。
+- 関数の引数に分割代入を使うことができる。アロー関数でも使える。
+- 引数が配列やオブジェクトの場合、そのオブジェクトの一部を関数で利用したい場合に便利。
 
 ```javascript:配列
 function foo([a,b]){
@@ -224,4 +230,125 @@ bar({ a: 1, b: 2, c: 3 }); // 1 2
 
 ### 分割代入の型注釈
 
-分割代入引数の右側に型注釈を書く。
+- 分割代入引数の右側に型注釈を書く。
+
+## 非同期処理
+
+- コード内で時間を要する処理を効率的に扱うことができる。
+  js はシングルスレッド、シングルプロセスなのでプログラムは基本的に直列に実行される(ブロッキングが発生する)。
+- 非同期処理を用いることで、並列しているかのような処理を実行することができる。
+  [サバイバル TypeScript:非同期処理について一番わかりやすい説明](https://typescriptbook.jp/reference/single-process-and-callback)
+
+### Promise
+
+- 非同期処理を見通しよく書くことができる。
+- 非同期操作の最終的な状態と結果を返す。
+
+- 状態
+  - 保留中:pending
+  - 履行済み:fulfilled
+  - 拒否:reject
+- 結果
+  - 解決済み:resolve
+  - 拒否:reject
+
+### async/await 構文
+
+- 非同期処理をより直感的に書くことができる。
+- 非同期コードを同期コードのように扱える。
+- Promise の then や catch で書いていたことを async await を使って関数に切り出すことができる。
+
+```typescript:Promise
+const promise = new Promise((resolve, reject) => {
+  const success = true;
+  if (success) {
+    resolve('promise resolved');
+  } else {
+    reject('promise rejected');
+  }
+});
+
+promise.then((data) => {
+  console.log(data);
+});
+```
+
+```typescript:async await
+function funcTime (ms: number) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function asyncFuncTime() {
+console.log("start");
+await funcTime(3000);
+console.log("end");
+}
+
+asyncFuncTime();
+```
+
+## ジェネリクス(generics)
+
+- 共通のロジックを持ち、型だけを変更したい場合に有効。
+- 型の再利用性が向上し、型の一貫性を保つことができる。
+- 型変数を導入でき、機能の一部を一般化できる。
+- <T>の部分は型の引数として捉える。
+
+## モジュール
+
+- typescript のモジュールシステムは、他のモジュールと共有するコードと、モジュール内部限定のコードを分ける。
+
+### export キーワード
+
+- モジュール内で定義した変数や関数,クラスなどを外部に公開できる
+- ファイルを介して export することで再 export することもできる。
+
+### import キーワード
+
+- export で公開した対象を別のファイルで読み込み使うことができる。
+
+### export default キーワード
+
+- default キーワードを使うと、モジュールがデフォルトで 1 つのみを export することを意味する。
+- import の際に別名指定をすることが可能。
+
+### export と default export の違い
+
+- export(named export)
+  - 複数の値を export するために使う。
+  - そのライブラリ内の補助的な関数や定数。
+  - ライブラリに含まれる複数のユーティリティ関数などを個別にインポートして使えるようにする場合に named export を使用します。
+- default export
+  - 一つの主要な値を export する。
+  - ライブラリやモジュールの主要なエクスポート。例えば、ライブラリ全体を 1 つのクラスとして提供する場合に default export を使用します。
+
+### type export 　と　 type import 　
+
+- 型だけを export,import することもできる。
+
+## 型レベルプログラミング
+
+- TypeScript は型レベルでプログラミングするための様々な機能を持っている。
+
+### typeof
+
+変数名から型を逆算できる。
+
+### keyof
+
+- オブジェクト型の全てのキーを文字列リテラルのユニオン型として取得できる。
+
+## ユーティリティ型
+
+- typescript は既存の方から新しい型を作成するための様々な型操作を提供している。
+- 個人的感想はかなり強力
+
+### Required
+
+- オプションプロパティを必須にする型。
+
+## tips
+
+- 型同士の比較を直接することができない。
