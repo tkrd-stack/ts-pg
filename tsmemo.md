@@ -4,6 +4,12 @@
 
 ## 実行環境
 
+- tsconfig.json 作成方法
+
+```terminal
+npx tsc --init
+```
+
 - ローカル環境でコンパイルする環境
 
 ```terminal

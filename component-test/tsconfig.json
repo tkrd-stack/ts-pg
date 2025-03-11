@@ -1,0 +1,15 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": ["es2015", "dom"],
+    "sourceMap": true,
+    "jsx": "react-jsx"
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
