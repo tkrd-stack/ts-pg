@@ -213,10 +213,110 @@ function getLight(direction: string): number {
 }
 
 // destructuring type annotation
+//// array
 function foo([a, b]: [string, number]) {}
+
+//// object
 function bar({ a, b }: { a: string; b: number }) {
   console.log(a, b);
 }
+
+// Promise
+const promise = new Promise((resolve, reject) => {
+  const success = true;
+  if (success) {
+    resolve('promise resolved');
+  } else {
+    reject('promise rejected');
+  }
+});
+
+promise.then((data) => {
+  console.log(data);
+});
+
+// async await
+function delay(ms: number) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function asyncFunc() {
+  console.log('start');
+  await delay(3000);
+  console.log('end');
+}
+
+asyncFunc();
+
+// generics
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+const output1 = identity<string>('isString');
+const output2 = identity<number>(123);
+
+// module
+// import export
+export const exportConst = 'export const';
+export function exportFunc() {
+  return 'export function';
+}
+export class exportClass {
+  name = 'export class';
+  constructor() {}
+  func() {
+    console.log(this.name);
+  }
+}
+
+// import { exportConst, exportFunc, exportClass } from './index';// 別ファイルで呼び出す場合
+
+// default export
+export default function () {
+  console.log('default export');
+}
+
+// type import type export
+export type MyObject = {
+  name: string;
+  age: number;
+};
+// import type { MyObject } from './index';// 別ファイルで呼び出す場合
+
+// type program
+//// typeof
+const object = {
+  name: 'hayashi',
+  age: 54,
+  greet: () => 'hello',
+};
+type ObjectType = typeof object;
+
+////keyof
+type Point = {
+  x: number;
+  y: number;
+};
+type PointKeys = keyof Point;
+type point = 'x' | 'y';
+
+const point1: PointKeys = { x: 1, y: 2 };
+const point2: point = { x: 1, y: 2 };
+
+console.log(typeof point1 == point2); //false
+
+// utility types
+//// Required
+type Person = {
+  name: string;
+  age?: number;
+  greet?: () => string;
+};
+
+type RequiredPerson = Required<Person>;
 
 // type guard function
 function isString2(value: any): value is string {
