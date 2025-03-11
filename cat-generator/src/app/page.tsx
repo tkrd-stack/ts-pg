@@ -26,6 +26,7 @@ export default function Home() {
       <div>{loading || <img src={imageUrl} />} </div>
       <button onClick={handleClick}>他のにゃんこもみる</button>
       <div>so cute & so lovely</div>
+      <div>so cute & so lovely</div>
     </div>
   );
 }
