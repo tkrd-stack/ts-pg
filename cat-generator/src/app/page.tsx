@@ -25,6 +25,7 @@ export default function Home() {
       <h1>Random Cat Image</h1>
       <div>{loading || <img src={imageUrl} />} </div>
       <button onClick={handleClick}>他のにゃんこもみる</button>
+      <div>so cute & so lovely</div>
     </div>
   );
 }
